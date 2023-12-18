@@ -1,0 +1,59 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                            Gold Miner 46         |
+//|                             Code developed by Forex Robot Easy Team|                                                  |
+//|                                 Website: forexroboteasy.com               |
+//+------------------------------------------------------------------+
+ 
+// Global variables
+double highestPrice;
+double currentPrice;
+double dipThreshold;
+double buyAmount;
+
+// Function to initiate a buy when the price dips
+void BuyInitiation()
+{
+    if (currentPrice < dipThreshold)
+    {
+        // Place buy order
+        OrderSend(Symbol(), OP_BUY, buyAmount, Ask, 0, 0, 0, '', 0, 0, clrGreen);
+    }
+}
+
+// Function to continue buying as the price decreases further
+void ContinueBuying()
+{
+    if (currentPrice < highestPrice)
+    {
+        // Place buy order
+        OrderSend(Symbol(), OP_BUY, buyAmount, Ask, 0, 0, 0, '', 0, 0, clrGreen);
+    }
+}
+
+// Function to stop buying when the price reaches the highest setting
+void StopBuying()
+{
+    if (currentPrice >= highestPrice)
+    {
+        // Stop buying
+        // Add code to handle stopping the buying process
+    }
+}
+
+// Entry point of the program
+void OnTick()
+{
+    // Get current price
+    currentPrice = MarketInfo(Symbol(), MODE_BID);
+
+    // Call the buy initiation function
+    BuyInitiation();
+
+    // Call the continuation of buying function
+    ContinueBuying();
+
+    // Call the stop buying function
+    StopBuying();
+}
+
